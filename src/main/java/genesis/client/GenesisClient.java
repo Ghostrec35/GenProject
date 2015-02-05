@@ -22,6 +22,7 @@ import net.minecraft.client.resources.model.ModelBakery;
 import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.client.FMLClientHandler;
 
 public class GenesisClient extends GenesisProxy
@@ -33,6 +34,8 @@ public class GenesisClient extends GenesisProxy
 	@Override
 	public void init()
 	{
+		MinecraftForge.EVENT_BUS.register(new TextureStitchHandler());
+		
 		BlockModelShapes blockModelShapes = MC.getBlockRendererDispatcher().getBlockModelShapes();
 		blockModelShapes.registerBlockWithStateMapper(GenesisBlocks.prototaxites, new StateMap.Builder().addPropertiesToIgnore(BlockCactus.AGE).build());
 		// TODO: Cannot add prefix "genesis" when registering variants!
@@ -47,6 +50,8 @@ public class GenesisClient extends GenesisProxy
 			registerModel(texture.item, texture.metadata, texture.name);
 			iterator.remove();
 		}
+		
+		
 		
 		((IReloadableResourceManager) MC.getResourceManager()).registerReloadListener(new ColorizerDryMoss());
 	}

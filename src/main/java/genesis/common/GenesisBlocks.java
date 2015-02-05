@@ -11,6 +11,7 @@ import genesis.block.BlockGenesisOre;
 import genesis.block.BlockGenesisRock;
 import genesis.block.BlockGrowingPlant;
 import genesis.block.BlockGrowingPlant.IGrowingPlantCustoms;
+import genesis.block.BlockKomatiiticLava;
 import genesis.block.BlockMetadata;
 import genesis.block.BlockMoss;
 import genesis.block.BlockNewPermafrost;
@@ -33,6 +34,7 @@ import genesis.util.Constants;
 import genesis.util.RandomItemDrop;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.renderer.BlockRendererDispatcher;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -40,7 +42,10 @@ import net.minecraft.util.BlockPos;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 import net.minecraftforge.common.EnumPlantType;
+import net.minecraftforge.fml.client.registry.ClientRegistry;
+import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.common.registry.GameData;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.common.registry.GameRegistry.ObjectHolder;
 
 @ObjectHolder(Constants.MOD_ID)
@@ -79,6 +84,9 @@ public final class GenesisBlocks
 	/* Limestone Ores */
 	public static final BlockGenesisOre brown_flint_ore = new BlockGenesisOre(1.5F, 4.35F, 1, 0).setDrop(EnumNodule.BROWN_FLINT).setUnlocalizedName("brownFlint");
 	public static final BlockGenesisOre marcasite_ore = new BlockGenesisOre(1.5F, 4.35F, 1, 0).setDrop(EnumNodule.MARCASITE).setUnlocalizedName("marcasite");
+	
+	/*Fluids*/
+	public static BlockKomatiiticLava komatiitic_lava;
 
 	/* Plants */
 	public static final BlockPlant plant = new BlockPlant().setUnlocalizedName("plant");
@@ -169,5 +177,8 @@ public final class GenesisBlocks
 		
 		Genesis.proxy.registerBlock(prototaxites, "prototaxites");
 		Genesis.proxy.registerBlock(coral, "coral", ItemBlockMetadata.class, EnumCoral.class);
+		
+		komatiitic_lava = new BlockKomatiiticLava(GenesisFluids.KOMATIITIC_LAVA).setUnlocalizedName("komatiicLava");
+		GameRegistry.registerBlock(komatiitic_lava, "komatiitic_lava");
 	}
 }

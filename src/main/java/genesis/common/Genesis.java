@@ -34,6 +34,7 @@ public class Genesis
 		GenesisConfig.readConfigValues(event.getSuggestedConfigurationFile());
 
 		initEnums();
+		GenesisFluids.registerFluids();
 		GenesisBlocks.registerBlocks();
 		GenesisItems.registerItems();
 
