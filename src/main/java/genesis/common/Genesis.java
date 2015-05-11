@@ -1,12 +1,15 @@
 package genesis.common;
 
-import genesis.metadata.*;
+import genesis.tileentity.TileEntityStorageBox;
 import genesis.util.Constants;
+import genesis.util.GuiHandler;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import net.minecraftforge.fml.common.network.NetworkRegistry;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 
 import org.apache.logging.log4j.Logger;
 
@@ -17,39 +20,39 @@ public class Genesis
 	public static Genesis instance;
 	@SidedProxy(clientSide = Constants.CLIENT_LOCATION, serverSide = Constants.PROXY_LOCATION)
 	public static GenesisProxy proxy;
-
+	
 	public static Logger logger;
-
+	
 	@Mod.EventHandler
 	public void preInit(FMLPreInitializationEvent event)
 	{
 		logger = event.getModLog();
-
+		
 		GenesisVersion.startVersionCheck();
 		GenesisConfig.readConfigValues(event.getSuggestedConfigurationFile());
-
+		
 		GenesisBlocks.registerBlocks();
 		GenesisItems.registerItems();
-
+		
 		registerTileEntities();
-
+		
 		GenesisBiomes.loadBiomes();
-
+		
 		registerEntities();
-
+		
 		proxy.preInit();
 	}
-
+	
 	@Mod.EventHandler
 	public void init(FMLInitializationEvent event)
 	{
 		GenesisRecipes.addRecipes();
-
+		
 		registerHandlers();
-
+		
 		proxy.init();
 	}
-
+	
 	@Mod.EventHandler
 	public void postInit(FMLPostInitializationEvent event)
 	{
@@ -57,16 +60,18 @@ public class Genesis
 		
 		GenesisRecipes.doSubstitutes();
 	}
-
+	
 	private void registerTileEntities()
 	{
+		GameRegistry.registerTileEntity(TileEntityStorageBox.class,"tileEntityStorageBox");
 	}
-
+	
 	private void registerEntities()
 	{
 	}
-
+	
 	private void registerHandlers()
 	{
+		NetworkRegistry.INSTANCE.registerGuiHandler(Genesis.instance, new GuiHandler());
 	}
 }

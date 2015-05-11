@@ -12,10 +12,7 @@ import genesis.metadata.VariantsOfTypesCombo.ObjectType.ObjectNamePosition;
 import genesis.util.Constants;
 import genesis.util.RandomItemDrop;
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockCactus;
-import net.minecraft.block.BlockLiquid;
 import net.minecraft.block.material.Material;
-import net.minecraft.client.renderer.block.statemap.StateMap;
 import net.minecraft.item.Item;
 import net.minecraftforge.common.EnumPlantType;
 
@@ -60,13 +57,13 @@ public final class GenesisBlocks
 	public static final BlockCalamitesBundle calamites_bundle = new BlockCalamitesBundle().setUnlocalizedName("calamitesBundle");
 
 	/* Plants */
-	public static final VariantsCombo<BlockPlant> plants = new VariantsCombo(new ObjectType("plant", BlockPlant.class, null).setUseSeparateVariantJsons(false).setNamePosition(ObjectNamePosition.NONE), EnumPlant.values());
+	public static final VariantsCombo<BlockPlant> plants = new VariantsCombo<BlockPlant>(new ObjectType<BlockPlant>("plant", BlockPlant.class, null).setUseSeparateVariantJsons(false).setNamePosition(ObjectNamePosition.NONE), EnumPlant.values());
 	public static final BlockGrowingPlant calamites = new BlockCalamites(true, 15, 10)
 			.setGrowthChanceMult(6, 1, 1)
 			.setUnlocalizedName("plant.calamites");
-	public static final VariantsCombo<BlockFern> ferns = new VariantsCombo(new ObjectType("fern", BlockFern.class, null).setUseSeparateVariantJsons(false).setNamePosition(ObjectNamePosition.NONE), EnumFern.values());
+	public static final VariantsCombo<BlockFern> ferns = new VariantsCombo<BlockFern>(new ObjectType<BlockFern>("fern", BlockFern.class, null).setUseSeparateVariantJsons(false).setNamePosition(ObjectNamePosition.NONE), EnumFern.values());
 	public static final BlockCobbania cobbania = new BlockCobbania();//.setUnlocalizedName("cobbania");
-	public static final VariantsCombo<BlockAquaticPlant> aquatic_plants = new VariantsCombo(new ObjectType("aquatic_plant", "aquaticPlant", BlockAquaticPlant.class, null).setUseSeparateVariantJsons(false).setNamePosition(ObjectNamePosition.NONE), EnumAquaticPlant.values());
+	public static final VariantsCombo<BlockAquaticPlant> aquatic_plants = new VariantsCombo<BlockAquaticPlant>(new ObjectType<BlockAquaticPlant>("aquatic_plant", "aquaticPlant", BlockAquaticPlant.class, null).setUseSeparateVariantJsons(false).setNamePosition(ObjectNamePosition.NONE), EnumAquaticPlant.values());
 
 	/* Crops */
 	public static final BlockGrowingPlant zingiberopsis = new BlockGrowingPlant(true, 7, 5, 2).setTopPosition(2)
@@ -90,8 +87,12 @@ public final class GenesisBlocks
 	/* Other Decorative */
 	public static final BlockGenesisFlowerPot flower_pot = new BlockGenesisFlowerPot();
 	
+	/* Tile Entities */
+	public static final BlockStorageBox storageBox = new BlockStorageBox(1);
+	
 	/* Misc */
 	public static final BlockGenesis prototaxites = new BlockPrototaxites().setUnlocalizedName("prototaxites");
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public static final VariantsCombo<BlockGenesisVariants> corals = new VariantsCombo(new ObjectType<BlockGenesisVariants>("coral", BlockGenesisVariants.class, null)
 			{
 				@Override
@@ -137,10 +138,10 @@ public final class GenesisBlocks
 		Genesis.proxy.registerBlock(olivine_ore, "olivine_ore");
 		Genesis.proxy.registerBlock(brown_flint_ore, "brown_flint_ore");
 		Genesis.proxy.registerBlock(marcasite_ore, "marcasite_ore");
-		trees.registerVariants(trees.LOG);
+		trees.registerVariants(TreeBlocksAndItems.LOG);
 		Genesis.proxy.registerBlock(calamites_bundle, "calamites_bundle");
 		Genesis.proxy.registerBlock(prototaxites_mycelium, "prototaxites_mycelium");
-		dungs.registerVariants(dungs.DUNG_BLOCK);
+		dungs.registerVariants(DungBlocksAndItems.DUNG_BLOCK);
 		
 		// Begin decorative
 		trees.registerAll();
@@ -177,7 +178,7 @@ public final class GenesisBlocks
 		Genesis.proxy.registerBlock(flower_pot, "genesis_flower_pot");
 		flower_pot.registerPlantsForPot(plants);
 		flower_pot.registerPlantsForPot(ferns);
-		flower_pot.registerPlantsForPot(trees, trees.SAPLING);
+		flower_pot.registerPlantsForPot(trees, TreeBlocksAndItems.SAPLING);
 		flower_pot.afterAllRegistered();
 		
 		Genesis.proxy.registerBlock(prototaxites, "prototaxites");
@@ -185,5 +186,7 @@ public final class GenesisBlocks
 		aquatic_plants.registerAll();
 
 		corals.registerAll();
+		
+		Genesis.proxy.registerBlock(storageBox, "storagebox");
 	}
 }
