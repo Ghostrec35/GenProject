@@ -29,18 +29,25 @@ public class Genesis
 		logger = event.getModLog();
 		
 		GenesisVersion.startVersionCheck();
-		GenesisConfig.readConfigValues(event.getSuggestedConfigurationFile());
 		
+		GenesisConfig.readConfigValues(event.getSuggestedConfigurationFile());
 		GenesisBlocks.registerBlocks();
 		GenesisItems.registerItems();
 		
 		registerTileEntities();
 		
 		GenesisBiomes.loadBiomes();
+		GenesisRecipes.addRecipes();
 		
 		registerEntities();
 		
+		GenesisBiomes.loadBiomes();
+		
 		proxy.preInit();
+	}
+
+	protected void registerEntities()
+	{
 	}
 	
 	@Mod.EventHandler
@@ -51,6 +58,12 @@ public class Genesis
 		registerHandlers();
 		
 		proxy.init();
+	}
+	
+	protected void registerHandlers()
+	{
+		NetworkRegistry.INSTANCE.registerGuiHandler(this, new GenesisGuiHandler());
+		NetworkRegistry.INSTANCE.registerGuiHandler(Genesis.instance, new GuiHandler());
 	}
 	
 	@Mod.EventHandler
@@ -64,14 +77,5 @@ public class Genesis
 	private void registerTileEntities()
 	{
 		GameRegistry.registerTileEntity(TileEntityStorageBox.class,"tileEntityStorageBox");
-	}
-	
-	private void registerEntities()
-	{
-	}
-	
-	private void registerHandlers()
-	{
-		NetworkRegistry.INSTANCE.registerGuiHandler(Genesis.instance, new GuiHandler());
 	}
 }

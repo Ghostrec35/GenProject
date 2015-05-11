@@ -1,11 +1,11 @@
 package genesis.common;
 
-import genesis.client.ClientOnlyFunction;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraftforge.fml.common.registry.GameData;
 import net.minecraftforge.fml.common.registry.GameRegistry;
+import genesis.util.*;
 
 public class GenesisProxy
 {
@@ -53,7 +53,8 @@ public class GenesisProxy
 	{
 	}
 
-	public void callClientOnly(ClientOnlyFunction clientOnlyFunction)
+	public void callSided(SidedFunction sidedFunction)
 	{
+		sidedFunction.server(this);
 	}
 }
